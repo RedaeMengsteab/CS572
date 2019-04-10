@@ -1,0 +1,45 @@
+1.Display all documents
+  db.collection('restuarants').find({});
+
+2.To display the Fields restaurant_id,name,district,cuisine From the collection
+
+  db.collection.find({}).project({restaurant_id:1,name:1,district:1,cuisine:1})
+
+3.To display the Fields restaurant_id,name,district,cuisine From the collection but excluding Field _id
+ db.collection.find({}).project({restaurant_id:1,name:1,district:1,cuisine:1,_id:0})
+
+
+4.To display the Fields restaurant_id,name,district and zipcode which is a property of the object address property From the collection but excluding Field _id
+
+    db.collection.find({}).project({restaurant_id:1,name:1,district:1,"address.zipcode":1,_id:0})
+
+5.To display all the restuarants which is in the district "Bronx"
+    db.collection.find({district:"Bronx"}).project({restaurant_id:1,name:1,district:1,"address.zipcode":1,_id:0})
+6.To display the First 5 resturants which is in the district "Bronx"
+   db.collection.find({district:"Bronx"}).limit(5)
+ 7.To display the next 5 restuarants after skipping first 5 which are in the district "Bronx"
+ 
+     db.collection.find({district:"Bronx"}).limit(5).skip(5)
+ 8.To find the restaurants which locates in coord value lessthan -95.754168
+
+    db.collection.find({"address.coord":{$elemMatch:{$lt:-95.754168}}})
+    db.collection.find({"address.coord":{$lt:-95.754168}})
+
+ 9. db.collection.find({"cuisine":{$ne:"American "},
+        "grades.score":{$gt:70},
+        "address.coord":{$lt:-65.754168}
+         })  
+10.  db.collection.find({name:{$regex:"^Wil"}}).project({restaurant_id:1,name:1,district:1,cuisine:1,_id:0})
+11.  db.collection.find({name:{$regex:"ces$"}}).project({restaurant_id:1,name:1,district:1,cuisine:1,_id:0})
+12.  db.collection.find({name:{$regex:"Reg"}}).project({restaurant_id:1,name:1,district:1,cuisine:1,_id:0})
+13.  db.collection.find({district:"Bronx",cuisine:{$in:["American ","Chinese"]}})
+14.  db.collection.find({district:{$in:["Staten Island","Queens","Bronx","Brooklyn"]}}).project({restuarant_id:1,name:1,district:1,cuisine:1})
+15.  db.collection.find({district:{$nin:["Staten Island","Queens","Bronx","Brooklyn"]}}).project({restuarant_id:1,name:1,district:1,cuisine:1})
+16.  db.collection.find({"grades.score":{$lte:10}}).project({restuarant_id:1,name:1,district:1,cuisine:1,"grades.score":1})
+17.  db.collection.find({"address.coord":{$elemMatch:{$gt:42,$lt:52}}}).project({restaurant_id:1,name:1,"address.coord":1})  
+18.  db.collection.find({}).sort({name:1});
+19.  db.collection.find({}).sort({name:-1})
+20.  db.collection.find({}).sort({name:-1,cuisine:-1,district:-1})
+21. db.collection.find({"address.street":{$exists:false}})
+22. db.collection.find({"address.coord":{$type:"double"}})
+23. db.collection.find({name:{$regex:"^Mad"}}).project({name:1,district:1,"address.coord":1,cuisine:1})
