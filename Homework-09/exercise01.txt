@@ -1,0 +1,45 @@
+1.Zipcodes of the state of Washington
+db.collection.aggregate([
+        {$match:{state:"WA"}},
+        {$group:{_id:{'ZIP':"$_id",state:"$state"}}} ]);
+ 2. All the zip codes with a population less than 5000
+
+   db.collection.aggregate([
+        {$match:{pop:{$lt:5000}}},
+        {$group:{_id:{'Zip_code':"$_id"}}},
+        
+        {$project:{_id:1}}
+         ]);    
+
+
+  3.const cursor=db.collection.aggregate([
+            {$group:{_id:{city:"$city",state:"$state"},zip_codes:{$addToSet:"$_id"}}},
+          {$match:
+          {$nor: [
+              {zip_codes: {$exists: false}},
+              {zip_codes: {$size: 0}},
+              {zip_codes: {$size: 1}}
+          ]}},
+          {$sort:{state:1,city:1}},
+          
+          ])
+
+
+
+
+
+
+  4.Display the least populated city in each state
+    db.collection.aggregate([
+            {$group:{_id:{state:"$state",city:"$city"},
+            population:{$sum:"$pop"}}
+        },
+        {$sort:{"_id.state":1,"population":1}},
+        {$group:{_id:"$_id.state",
+            city:{$first:"$_id.city"},
+            population:{$first:"$population"}}},
+            {$sort:{"_id":1}}, 
+            //{$limit:1}
+         
+             ])     
+
