@@ -1,0 +1,13 @@
+<h2> List of Users</h2>
+<ul>
+  <li *ngFor="let user of users">
+    <!-- {{user.name.first}} -->
+
+    <a [routerLink]="[user.login.uuid]"> {{user.name.first}} {{user.name.last}}</a>
+
+
+
+
+
+  </li>
+</ul>
